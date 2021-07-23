@@ -22,8 +22,8 @@ jobs:
       env:
         RELEASE: ${{ steps.lastrelease.outputs.latest_tag }}
       run: |
-        wget https://github.com/mikefarah/yq/releases/download/${VERSION}/${BINARY} -O /usr/bin/yq
-        chmod +x /usr/bin/yq
+        wget https://github.com/mikefarah/yq/releases/download/${VERSION}/${BINARY} -O yq && sudo mv yq /usr/bin/yq
+        sudo chmod +x /usr/bin/yq
         cd deploy
         ../hack/new-release.sh ${RELEASE}
     - uses: stefanzweifel/git-auto-commit-action@v4
