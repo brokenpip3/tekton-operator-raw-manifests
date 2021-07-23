@@ -1,4 +1,4 @@
-name: checking-updates
+name: checking updates
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - "testing-ci"
 
 jobs:
-  raw manifest:
+  raw-manifests:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -31,4 +31,4 @@ jobs:
         commit_message: Automated Update to version {{ steps.lastrelease.outputs.latest_tag }}
         branch: master
         file_pattern: deploy/*.yaml
-        tagging_message: {{ steps.lastrelease.outputs.latest_tag }}
+        tagging_message: ${{ steps.lastrelease.outputs.latest_tag }}
