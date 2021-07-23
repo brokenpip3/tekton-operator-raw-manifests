@@ -29,6 +29,6 @@ jobs:
     - uses: stefanzweifel/git-auto-commit-action@v4
       with:
         commit_message: Automated Update to version {{ steps.lastrelease.outputs.latest_tag }}
-        branch: master
+        branch: testing-ci
         file_pattern: deploy/*.yaml
         tagging_message: ${{ steps.lastrelease.outputs.latest_tag }}
