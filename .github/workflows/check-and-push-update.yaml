@@ -10,6 +10,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: "3.7"
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install yq
     - name: Check last upstream version
       id: lastrelease
       run: |
@@ -22,13 +30,11 @@ jobs:
       env:
         RELEASE: ${{ steps.lastrelease.outputs.latest_tag }}
       run: |
-        wget https://github.com/mikefarah/yq/releases/download/v4.11.1/yq_linux_amd64 -O yq && sudo mv yq /usr/bin/yq
-        sudo chmod +x /usr/bin/yq
         cd deploy
         ../hack/new-release.sh ${RELEASE}
     - uses: stefanzweifel/git-auto-commit-action@v4
       with:
-        commit_message: Automated Update to version {{ steps.lastrelease.outputs.latest_tag }}
+        commit_message: Automated Update to version ${{ steps.lastrelease.outputs.latest_tag }}
         branch: testing-ci
         file_pattern: deploy/*.yaml
         tagging_message: ${{ steps.lastrelease.outputs.latest_tag }}
