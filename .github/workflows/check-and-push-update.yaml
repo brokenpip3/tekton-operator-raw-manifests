@@ -1,9 +1,8 @@
 name: checking updates
 
 on:
-  push:
-    branches:
-      - "testing-ci"
+  schedule:
+  - cron: "10 9 * * *"
 
 jobs:
   raw-manifests:
@@ -35,6 +34,6 @@ jobs:
     - uses: stefanzweifel/git-auto-commit-action@v4
       with:
         commit_message: Automated Update to version ${{ steps.lastrelease.outputs.latest_tag }}
-        branch: testing-ci
+        branch: main
         file_pattern: deploy/*.yaml
         tagging_message: ${{ steps.lastrelease.outputs.latest_tag }}
