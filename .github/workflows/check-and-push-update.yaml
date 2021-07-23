@@ -22,7 +22,7 @@ jobs:
     - name: execute hack
       id: hack
       env:
-        RELEASE: {{ steps.lastrelease.outputs.latest_tag }}
+        RELEASE: ${{ steps.lastrelease.outputs.latest_tag }}
       run: |
         cd deploy
         ../hack/new-release.sh ${RELEASE}
