@@ -22,7 +22,7 @@ jobs:
       env:
         RELEASE: ${{ steps.lastrelease.outputs.latest_tag }}
       run: |
-        wget https://github.com/mikefarah/yq/releases/download/${VERSION}/${BINARY} -O yq && sudo mv yq /usr/bin/yq
+        wget https://github.com/mikefarah/yq/releases/download/v4.11.1/yq_linux_amd64 -O yq && sudo mv yq /usr/bin/yq
         sudo chmod +x /usr/bin/yq
         cd deploy
         ../hack/new-release.sh ${RELEASE}
