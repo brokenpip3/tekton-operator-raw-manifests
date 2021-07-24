@@ -51,3 +51,6 @@ spec:
   validation: client
 ...
 ```
+
+Disclaimer: I encourage you to fork this repo instead of using it this a
+source of truth, never trust anyone.
