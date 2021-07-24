@@ -22,6 +22,7 @@ for file in tk-operator*; do
 done
 
 rm release.yaml
+rm kustomization.yaml 
 
 kustomize create --autodetect
 
