@@ -3,6 +3,8 @@ name: checking updates
 on:
   schedule:
   - cron: "40 00 * * *"
+  push:
+    branch: main
 
 jobs:
   raw-manifests:
