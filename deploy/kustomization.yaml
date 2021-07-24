@@ -11,5 +11,4 @@ resources:
 - customresourcedefinition-tektontriggers.operator.tekton.dev.yaml
 - deployment-tekton-operator.yaml
 - namespace-tekton-operator.yaml
-- release.yaml
 - serviceaccount-tekton-operator.yaml
