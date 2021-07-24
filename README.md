@@ -15,5 +15,39 @@ operator version in raw k8s yaml files.
 * Download the official manifest and split them by kind and name
 * Commit the changes and tag a new release in this repo
 
-See [new-release](./hack/new-release.sh)
+See [new-release](./hack/new-release.sh) and [github-ci](.github/workflows/check-and-push-update.yaml)
 
+## How to use it with Flux
+
+```yaml
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: GitRepository
+metadata:
+  name: tekton-operator-raw
+  namespace: flux-system
+spec:
+  interval: 10m
+  url: https://github.com/brokenpip3/tekton-operator-raw-manifests
+  ref:
+    tag: v0.23.0-2
+  ignore: |
+    .github/
+    hack/
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
+kind: Kustomization
+metadata:
+  name: tekton-operator-raw
+  namespace: flux-system
+spec:
+  interval: 10m
+  path: ./deploy
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: tekton-operator-raw
+  timeout: 2m0s
+  validation: client
+...
+```
