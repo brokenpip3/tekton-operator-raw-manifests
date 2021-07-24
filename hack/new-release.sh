@@ -21,4 +21,6 @@ for file in tk-operator*; do
 		mv "$file" "$kind-$name.yaml"
 done
 
+kustomize create --autodetect
+
 rm release.yaml

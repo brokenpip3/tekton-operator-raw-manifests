@@ -3,6 +3,8 @@ name: checking updates
 on:
   schedule:
   - cron: "40 00 * * *"
+  push:
+    branch: main
 
 jobs:
   raw-manifests:
@@ -15,8 +17,16 @@ jobs:
         python-version: "3.7"
     - name: Install dependencies
       run: |
+        echo "downloading yq"
         python -m pip install --upgrade pip
         pip install yq
+        yq --version
+
+        KUSTOMIZE=3.5.5
+        echo "downloading kustomize ${KUSTOMIZE}"
+        curl -sL https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv${KUSTOMIZE}/kustomize_v${KUSTOMIZE}_linux_amd64.tar.gz | \
+        tar xz && mv kustomize /usr/local/bin/kustomize
+        kustomize version
     - name: Check last upstream version
       id: lastrelease
       run: |
