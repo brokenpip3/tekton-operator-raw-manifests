@@ -1,0 +1,14 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- clusterrole-tekton-operator.yaml
+- clusterrolebinding-tekton-operator.yaml
+- configmap-config-logging.yaml
+- customresourcedefinition-tektonaddons.operator.tekton.dev.yaml
+- customresourcedefinition-tektonconfigs.operator.tekton.dev.yaml
+- customresourcedefinition-tektondashboards.operator.tekton.dev.yaml
+- customresourcedefinition-tektonpipelines.operator.tekton.dev.yaml
+- customresourcedefinition-tektontriggers.operator.tekton.dev.yaml
+- deployment-tekton-operator.yaml
+- namespace-tekton-operator.yaml
+- serviceaccount-tekton-operator.yaml
