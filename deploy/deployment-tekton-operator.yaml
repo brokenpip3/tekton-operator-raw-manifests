@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   labels:
     operator.tekton.dev/release: devel
-    version: v0.23.0-2
+    version: v0.49.0
   name: tekton-operator
   namespace: tekton-operator
 spec:
@@ -20,7 +20,9 @@ spec:
       containers:
         - env:
             - name: IMAGE_PIPELINES_PROXY
-              value: gcr.io/tekton-releases/github.com/tektoncd/operator/cmd/kubernetes/webhook:v0.23.0-2@sha256:f359bf33d2cb6073f1b19b04cd76f6d341aa5a2ddd485c9a10a5b234d8fb4db0
+              value: gcr.io/tekton-releases/github.com/tektoncd/operator/cmd/kubernetes/proxy-webhook:v0.49.0@sha256:561dc8867bb94007208806178d24efff59a290f4082b6e72a0406d8532060c18
+            - name: IMAGE_JOB_PRUNER_TKN
+              value: gcr.io/tekton-releases/dogfooding/tkn@sha256:f69a02ef099d8915e9e4ea1b74e43b7a9309fc97cf23cb457ebf191e73491677
             - name: SYSTEM_NAMESPACE
               valueFrom:
                 fieldRef:
@@ -31,9 +33,17 @@ spec:
                   fieldPath: metadata.name
             - name: OPERATOR_NAME
               value: tekton-operator
-          image: gcr.io/tekton-releases/github.com/tektoncd/operator/cmd/kubernetes/operator:v0.23.0-2@sha256:bc04c98f9a0aee94b5be740e2818a043383475347a576e766a984933d4e8999f
-          imagePullPolicy: Always
+            - name: AUTOINSTALL_COMPONENTS
+              valueFrom:
+                configMapKeyRef:
+                  key: AUTOINSTALL_COMPONENTS
+                  name: tekton-config-defaults
+            - name: DEFAULT_TARGET_NAMESPACE
+              valueFrom:
+                configMapKeyRef:
+                  key: DEFAULT_TARGET_NAMESPACE
+                  name: tekton-config-defaults
+          image: gcr.io/tekton-releases/github.com/tektoncd/operator/cmd/kubernetes/operator:v0.49.0@sha256:bd055c27d897f327ddb4e846782fccfda3b1d3d2397d5c764d8038547acde391
           name: tekton-operator
       serviceAccountName: tekton-operator
-
 ---
